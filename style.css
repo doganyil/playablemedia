@@ -7,3 +7,10 @@ body {
     justify-content: center;
     display: flex;
 }
+
+#runningPicture {
+    display: block;
+    margin: 0 auto; /* Centers it left and right */
+    max-width: 50%; /* Your size choice */
+    height: auto;
+}
