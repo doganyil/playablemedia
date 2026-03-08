@@ -2,7 +2,7 @@ body {
   background-color: rgb(226, 75, 75);
 }
 
-#mainTitle{
+#mainTitle, #points, #nextLetterTitle, #nextLetter{
     align-items: center;
     justify-content: center;
     display: flex;
@@ -11,6 +11,6 @@ body {
 #runningPicture {
     display: block;
     margin: 0 auto; /* Centers it left and right */
-    max-width: 50%; /* Your size choice */
+    max-width: 30%; /* Your size choice */
     height: auto;
 }
