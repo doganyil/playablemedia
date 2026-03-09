@@ -50,7 +50,7 @@ setShakePixel(20)
 // Function to update the text on the screen
 function updateScreen() {
     pointsDisplay.innerText = "Health Points: " + points;
-    nextLetterTitle.innerText = "Next letter to type" + shakePercentage + "% shakiness"
+    nextLetterTitle.innerText = "Next letter to type (" + shakePercentage + "% tremors)"
 
 
 
