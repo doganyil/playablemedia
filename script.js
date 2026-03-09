@@ -9,6 +9,9 @@ const letterDisplay = document.getElementById("nextLetter")
 const runPicture = document.getElementById("runningPicture");
 let pictureOrder = 1
 
+let shakePercentage = 100;
+const maxShakePixels = 20;
+
 // Function to generate a random letter
         function generateNewLetter() {
             const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -35,9 +38,19 @@ let pictureOrder = 1
                 
             }
         });
+
+
+function setShakePixel(pixels) {
+    letterDisplay.style.setProperty('--shake-pixels', pixels + 'px');
+
+}
+setShakePixel(20)
+
 // Function to update the text on the screen
-        function updateScreen() {
-            pointsDisplay.innerText = "Health Points: " + points;
+function updateScreen() {
+    pointsDisplay.innerText = "Health Points: " + points;
+
+
             //upgradeBtn.innerText = "Buy Running Shoes (Cost: " + upgradeCost + " HP)";
             
             // Enable or disable the upgrade button based on if we have enough HP
@@ -47,8 +60,4 @@ let pictureOrder = 1
       //          upgradeBtn.disabled = true;
         //    }
         }
-
-
-
-
 
