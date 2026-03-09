@@ -1,5 +1,11 @@
 body {
-  background-color: rgb(226, 75, 75);
+  background-color: rgb(46, 21, 21);
+/* Change this line to use Atkinson Hyperlegible */
+    font-family: 'Atkinson Hyperlegible', sans-serif;
+    color: rgb(217, 207, 207);
+    text-align: center;
+    margin-top: 50px;
+
 }
 
 #runningPicture {
@@ -37,4 +43,8 @@ body {
     align-items: center;
     justify-content: center;
     display: flex;
+}
+
+#mainTitle {
+    margin-top: -25px;
 }

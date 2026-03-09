@@ -13,6 +13,8 @@ let pictureOrder = 1
 let shakePercentage = 100;
 const maxShakePixels = 20;
 
+lettersTyped = ""
+
 // Function to generate a random letter
         function generateNewLetter() {
             const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -34,6 +36,7 @@ const maxShakePixels = 20;
                     runPicture.src = "run1.jpeg";
                     pictureOrder = 1;
                 }
+                lettersTyped += event.key.toUpperCase()
                 updateScreen();
                 generateNewLetter();
                 
@@ -41,17 +44,45 @@ const maxShakePixels = 20;
         });
 
 
-function setShakePixel(pixels) {
-    letterDisplay.style.setProperty('--shake-pixels', pixels + 'px');
+// Function to update the shaking intensity
+function applyShakeIntensity() {
 
+    // Calculate the actual pixel movement based on the percentage
+    let currentPixels = (shakePercentage / 100) * maxShakePixels;
+    
+    // Inject that pixel amount into our CSS variable
+    letterDisplay.style.setProperty('--shake-pixels', currentPixels + 'px');
 }
-setShakePixel(20)
+
+function changeShakePercentage() {
+    logarithmicPoints = Math.log10(points)
+    console.log("Math " + Math.log10(10000000))
+    console.log("Points in log10 is " + logarithmicPoints)
+    // log10(1) = 0
+    // log10(10) = 1
+    // log10(100) = 2, etc, remember dodo!
+    if (logarithmicPoints >= 1) shakePercentage = 90;
+    if (logarithmicPoints > 2) shakePercentage = 80;
+    if (logarithmicPoints > 3) shakePercentage = 70;
+    if (logarithmicPoints > 4) shakePercentage = 60;
+    if (logarithmicPoints > 5) shakePercentage = 50;
+    if (logarithmicPoints > 6) shakePercentage = 40;
+    if (logarithmicPoints > 7) shakePercentage = 30;
+}
+
+const writtenSoFar = document.getElementById("writtenSoFar")
+function updateTextWritten() {
+    writtenSoFar.innerText = lettersTyped
+}
+
 
 // Function to update the text on the screen
 function updateScreen() {
     pointsDisplay.innerText = "Health Points: " + points;
     nextLetterTitle.innerText = "Next letter to type (" + shakePercentage + "% tremors)"
-
+    applyShakeIntensity()
+    changeShakePercentage()
+    updateTextWritten()
 
 
             //upgradeBtn.innerText = "Buy Running Shoes (Cost: " + upgradeCost + " HP)";
