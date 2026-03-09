@@ -5,6 +5,7 @@ let currentLetter = "A";
 
 const pointsDisplay = document.getElementById("points");
 const letterDisplay = document.getElementById("nextLetter")
+const nextLetterTitle = document.getElementById("nextLetterTitle")
 
 const runPicture = document.getElementById("runningPicture");
 let pictureOrder = 1
@@ -49,6 +50,8 @@ setShakePixel(20)
 // Function to update the text on the screen
 function updateScreen() {
     pointsDisplay.innerText = "Health Points: " + points;
+    nextLetterTitle.innerText = "Next letter to type" + shakePercentage + "% shakiness"
+
 
 
             //upgradeBtn.innerText = "Buy Running Shoes (Cost: " + upgradeCost + " HP)";
