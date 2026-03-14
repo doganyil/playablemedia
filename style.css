@@ -10,9 +10,11 @@ body {
 
 #runningPicture {
     display: block;
-    margin: 0 auto; /* Centers it left and right */
-    max-width: 25%; /* Your size choice */
+    width: 100%; /* Makes it fill the center column nicely */
+    max-width: 300px; /* Prevents it from getting too massive */
     height: auto;
+    border-radius: 10px; /* Softens the edges of your image */
+    border: 3px solid #c9790f; /* Adds a nice border matching your theme */
 }
 
 /* Eksperimental */
@@ -58,4 +60,56 @@ hr {
 #firstLine {
     border: 7px dotted white;
     border-radius: 10px;
+}
+
+
+/* --- FLEXBOX LAYOUT --- */
+.game-area {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* Keeps boxes aligned to the top */
+    max-width: 1200px;
+    margin: 30px auto; /* Centers the whole play area */
+    gap: 20px; /* Space between the three columns */
+    padding: 0 20px;
+}
+
+/* The styling for the "invisible" boxes */
+.column {
+    flex: 1; /* Makes the left and right columns take up equal space */
+    background-color: rgba(0, 0, 0, 0.2); /* Very subtle dark background */
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3); /* Soft shadow for depth */
+}
+
+.center-game {
+    flex: 1.5; /* Makes the center column slightly wider than the side columns */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* --- UPGRADE BUTTONS --- */
+.upgrade-card {
+    background-color: #3e2723; /* Dark brown matching your background */
+    color: rgb(217, 207, 207);
+    border: 2px solid #c9790f; /* Orange accent matching your letter */
+    border-radius: 10px;
+    padding: 15px;
+    width: 100%;
+    margin-bottom: 15px;
+    cursor: pointer;
+    font-family: 'Atkinson Hyperlegible', sans-serif;
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+/* Makes the button pop out when you hover over it */
+.upgrade-card:hover {
+    transform: scale(1.05);
+    background-color: #4e342e;
+}
+
+.upgrade-card h4, .upgrade-card p {
+    margin: 5px 0; /* Cleans up the spacing inside the buttons */
 }

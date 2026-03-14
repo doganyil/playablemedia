@@ -75,6 +75,14 @@ function updateTextWritten() {
     writtenSoFar.innerText = lettersTyped
 }
 
+// -------------
+//Upgrade system
+// -------------
+let strongerFingersUpgradeCost = 10
+// Elements
+const btnStrongerFingers = document.getElementById("btn-stronger-fingers");
+const costStrongerFingers = document.getElementById("cost-stronger-fingers");
+
 
 // Function to update the text on the screen
 function updateScreen() {
@@ -94,4 +102,7 @@ function updateScreen() {
       //          upgradeBtn.disabled = true;
         //    }
         }
+
+
+
 
