@@ -11,7 +11,7 @@ body {
 #runningPicture {
     display: block;
     margin: 0 auto; /* Centers it left and right */
-    max-width: 30%; /* Your size choice */
+    max-width: 25%; /* Your size choice */
     height: auto;
 }
 
@@ -47,4 +47,15 @@ body {
 
 #mainTitle {
     margin-top: -25px;
+}
+
+
+hr {
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+#firstLine {
+    border: 7px dotted white;
+    border-radius: 10px;
 }
