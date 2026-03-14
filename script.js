@@ -23,6 +23,12 @@ lettersTyped = ""
 // Function to generate a random letter
 function generateNewLetter() {
     currentLetter = textToWrite[letterIndex];
+    if (currentLetter === undefined) {
+        letterDisplay.innerText = "Scroll down!"
+        nextLetterTitle.innerText = "Run complete!";
+        return;
+
+    }
     if (currentLetter === " ") {
         letterDisplay.innerText = "SPACE";
         console.log("space thing reached");
