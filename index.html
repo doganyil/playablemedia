@@ -1,48 +1,53 @@
 <!DOCTYPE html>
 <html lang="en-US">
-  <head>
-    <link rel="stylesheet" href="style.css">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
-  </head>
-  <body>
-    <h1 id="mainTitle">Run4Fit (Version 14. marts kl 14.00)</h1>
-    <hr id="firstLine"><h2 id="points">Health Points: 0</h2>
+<head>
+  <link rel="stylesheet" href="style.css">
 
-    <div class="game-area">
-      
-        <div class="column left-upgrades">
-            <h3>Physical Upgrades</h3>
-            <button class="upgrade-card" id="btn-stronger-fingers">
-                <h4>Stronger Fingers</h4>
-                <p id="cost-stronger-fingers">Cost: 10</p>
-                <p>Doubles your health points per letter!</p>
-            </button>
-        </div>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap"
+    rel="stylesheet">
+</head>
 
-        <div class="column center-game">
-            <h2 id="nextLetterTitle">Next letter to type</h2>
-            <h1 id="nextLetter">A</h1>
-            <img id="runningPicture" src="run1.jpeg" alt="Running">
-        </div>
+<body>
+  <h1 id="mainTitle">Run4Fit (Version 14. marts kl 14.00)</h1>
+  <hr id="firstLine">
+  <h2 id="points">Health Points: 0</h2>
 
-        <div class="column right-upgrades">
-            <h3>Mental Upgrades</h3>
-            <button class="upgrade-card">
-                <h4>Better Focus</h4>
-                <p>Cost: y</p>
-                <p>Reduces tremors faster!</p>
-            </button>
-        </div>
+  <div class="game-area">
 
+    <div class="column left-upgrades">
+      <h3>Physical Upgrades</h3>
+      <button class="upgrade-card" id="btn-stronger-fingers">
+        <h4>Stronger Fingers</h4>
+        <p id="cost-stronger-fingers">Cost: 10</p>
+        <p>Doubles your health points per letter! (Scales 1.9x)</p>
+      </button>
     </div>
-    <hr id="secondLine">
-    <h1>This is what you have written so far</h1>
-    <p id="writtenSoFar">pages</p>
-    <br>
-    <br>
-    <script src="script.js"></script>
-  </body>
+
+    <div class="column center-game">
+      <h2 id="nextLetterTitle">Next letter to type</h2>
+      <h1 id="nextLetter">Y</h1>
+      <img id="runningPicture" src="run1.jpeg" alt="Running">
+    </div>
+
+    <div class="column right-upgrades">
+      <h3>Mental Upgrades</h3>
+      <button class="upgrade-card">
+        <h4>Better Focus</h4>
+        <p>Cost: y</p>
+        <p>Reduces tremors faster!</p>
+      </button>
+    </div>
+
+  </div>
+  <hr id="secondLine">
+  <h1>This is what you have written so far :)</h1>
+  <p id="writtenSoFar">PLACEHOLDER</p>
+  <br>
+  <br>
+  <script src="script.js"></script>
+</body>
+
 </html>

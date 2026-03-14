@@ -1,7 +1,7 @@
 let points = 0;
 let pointsPerStep = 1;
 let upgradeCost = 0;
-let currentLetter = "A";
+let currentLetter = "Y";
 
 const pointsDisplay = document.getElementById("points");
 const letterDisplay = document.getElementById("nextLetter")
@@ -13,35 +13,51 @@ let pictureOrder = 1
 let shakePercentage = 100;
 const maxShakePixels = 20;
 
+textToWrite = "YOU ARE PERFECT AS YOU ARE, OF COURSE!"
+letterIndex = 0
+console.log("Length of the text to write " + textToWrite.length)
+console.log(textToWrite[1])
+
 lettersTyped = ""
 
 // Function to generate a random letter
-        function generateNewLetter() {
-            const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            const randomIndex = Math.floor(Math.random() * alphabet.length);
-            currentLetter = alphabet[randomIndex];
-            letterDisplay.innerText = currentLetter;
-        }
+function generateNewLetter() {
+    currentLetter = textToWrite[letterIndex];
+    if (currentLetter === " ") {
+        letterDisplay.innerText = "SPACE";
+        console.log("space thing reached");
+    } else {
+        // Only display the currentLetter if it is NOT a space
+        letterDisplay.innerText = currentLetter;
+    }
+    console.log(currentLetter)
+}
 
-        // Listen for keyboard presses
-        document.addEventListener("keydown", function(event) {
-            // Check if the key pressed matches the current letter (ignoring case)
-            if (event.key.toUpperCase() === currentLetter) {
-                // Correct! Add HP and update the screen
-                points += pointsPerStep;
-                if (pictureOrder === 1) {
-                    runPicture.src = "run2.jpeg";
-                    pictureOrder = 2;
-                } else {
-                    runPicture.src = "run1.jpeg";
-                    pictureOrder = 1;
-                }
-                lettersTyped += event.key.toUpperCase()
-                updateScreen();
-                generateNewLetter();
-                
-            }
-        });
+// Listen for keyboard presses
+document.addEventListener("keydown", function (event) {
+
+    if (event.key === " ") {
+        event.preventDefault();
+    }
+    // Check if the key pressed matches the current letter (ignoring case)
+    console.log("Key pressed:" + event.key)
+    if (event.key.toUpperCase() === currentLetter) {
+        // Correct! Add HP and update the screen
+        points += pointsPerStep;
+        if (pictureOrder === 1) {
+            runPicture.src = "run2.jpeg";
+            pictureOrder = 2;
+        } else {
+            runPicture.src = "run1.jpeg";
+            pictureOrder = 1;
+        }
+        lettersTyped += event.key.toUpperCase()
+        letterIndex += 1
+        updateScreen();
+        generateNewLetter();
+
+    }
+});
 
 
 // Function to update the shaking intensity
@@ -49,15 +65,13 @@ function applyShakeIntensity() {
 
     // Calculate the actual pixel movement based on the percentage
     let currentPixels = (shakePercentage / 100) * maxShakePixels;
-    
+
     // Inject that pixel amount into our CSS variable
     letterDisplay.style.setProperty('--shake-pixels', currentPixels + 'px');
 }
 
 function changeShakePercentage() {
     logarithmicPoints = Math.log10(points)
-    console.log("Math " + Math.log10(10000000))
-    console.log("Points in log10 is " + logarithmicPoints)
     // log10(1) = 0
     // log10(10) = 1
     // log10(100) = 2, etc, remember dodo!
@@ -84,6 +98,22 @@ const btnStrongerFingers = document.getElementById("btn-stronger-fingers");
 const costStrongerFingers = document.getElementById("cost-stronger-fingers");
 
 
+// Listen for clicks on the Stronger Fingers upgrade
+btnStrongerFingers.addEventListener("click", function () {
+    // Check if the player has enough points to buy it
+    console.log("Reached 1")
+    if (points >= strongerFingersUpgradeCost) {
+        console.log("REached 2")
+        points -= strongerFingersUpgradeCost; // Deduct the cost from total points
+        pointsPerStep *= 2;    // Double the points earned per letter
+        strongerFingersUpgradeCost = Math.floor(strongerFingersUpgradeCost * 1.9); // Make the next upgrade 2.5x more expensive
+        costStrongerFingers.innerText = "Cost: " + strongerFingersUpgradeCost
+        console.log("Reached 3")
+
+        updateScreen(); // Refresh the screen immediately
+    }
+});
+
 // Function to update the text on the screen
 function updateScreen() {
     pointsDisplay.innerText = "Health Points: " + points;
@@ -93,15 +123,15 @@ function updateScreen() {
     updateTextWritten()
 
 
-            //upgradeBtn.innerText = "Buy Running Shoes (Cost: " + upgradeCost + " HP)";
-            
-            // Enable or disable the upgrade button based on if we have enough HP
-//            if (points >= upgradeCost) {
-  //              upgradeBtn.disabled = false;
+    //upgradeBtn.innerText = "Buy Running Shoes (Cost: " + upgradeCost + " HP)";
+
+    // Enable or disable the upgrade button based on if we have enough HP
+    //            if (points >= upgradeCost) {
+    //              upgradeBtn.disabled = false;
     //    } else {
-      //          upgradeBtn.disabled = true;
-        //    }
-        }
+    //          upgradeBtn.disabled = true;
+    //    }
+}
 
 
 

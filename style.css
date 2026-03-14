@@ -46,6 +46,9 @@ body {
     justify-content: center;
     display: flex;
 }
+#points {
+    font-size: 25px;
+}
 
 #mainTitle {
     margin-top: -25px;
