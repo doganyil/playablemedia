@@ -11,8 +11,12 @@
 </head>
 
 <body>
-  <h1 id="mainTitle">Run4Fit (Version 14. marts kl 14.55)</h1>
-  <hr id="firstLine">
+  <h1 id="mainTitle">Run4Fit - Incremental game by Dogan Yildirim</h1>
+
+  <div id="progress-container">
+    <div id="progress-bar"></div>
+    <div id="progress-text"></div>
+  </div>
   <h2 id="points">Health Points: 0</h2>
 
   <div class="game-area">
@@ -22,7 +26,12 @@
       <button class="upgrade-card" id="btn-stronger-fingers">
         <h4>Stronger Fingers</h4>
         <p id="cost-stronger-fingers">Cost: 10</p>
-        <p>Doubles your health points per letter! (Scales 1.9x)</p>
+        <p>Doubles your health points per letter! <br><br>(Scales 5x)</p>
+      </button>
+      <button class="upgrade-card" id="PLACEHOLDER">
+        <h4>Better finger and eye correlation</h4>
+        <p id="PLACEHOLDER">Cost: 10</p>
+        <p>Add butter to your fingers. Butter smooth! <br> <br> (Reduces Stronger Fingers scaling by 0.5x)</p>
       </button>
     </div>
 
@@ -33,13 +42,25 @@
     </div>
 
     <div class="column right-upgrades">
+
       <h3>Mental Upgrades</h3>
-      <button class="upgrade-card">
-        <h4>Better Focus</h4>
-        <p>Cost: y</p>
-        <p>Reduces tremors faster!</p>
+
+      <button class="upgrade-card" id="PLACEHOLDER">
+        <h4>Carbidopa-Levodopa</h4>
+        <p id="PLACEHOLDER">Cost: 100.000</p>
+        <p>Levodopa converts into dopamine in the brain, while carbidopa prevents it from converting too early outside
+          the brain, reducing side effects like nausea <br><br> (See more letters on the screen!)</p>
       </button>
+
+      <button class="upgrade-card" id="PLACEHOLDER">
+        <h4>Tremors BEGONE!</h4>
+        <p id="PLACEHOLDER">Cost: 10</p>
+        <p>Reduces the shakiness of letters by 10% <br> (scales log10 (so, 10x)) <br><br>Current tremors: 100%</p>
+      </button>
+
     </div>
+
+
 
   </div>
   <hr id="secondLine">

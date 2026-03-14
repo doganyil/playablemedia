@@ -60,9 +60,35 @@ hr {
     margin-right: 10%;
 }
 
-#firstLine {
-    border: 7px dotted white;
-    border-radius: 10px;
+/* --- PROGRESS BAR --- */
+#progress-container {
+    position: relative; /* CRITICAL: Allows us to center the text inside it */
+    width: 80%; 
+    height: 25px; 
+    background-color: rgba(0, 0, 0, 0.4); 
+    border: 2px solid #c9790f; 
+    border-radius: 15px; 
+    margin: 20px auto; 
+    overflow: hidden; 
+}
+
+#progress-bar {
+    width: 0%; /* Starts at 0% */
+    height: 100%;
+    background-color: #2ecc71; /* A nice, encouraging green color */
+    transition: width 0.2s ease-in-out; /* Makes it fill up smoothly instead of snapping */
+}
+
+#progress-text {
+    position: absolute; /* Takes the text out of the normal layout flow */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* This math perfectly centers it dead-middle */
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    z-index: 2; /* Ensures the text sits ON TOP of the green bar */
+    pointer-events: none; /* Makes sure the text doesn't accidentally block clicks */
 }
 
 
@@ -115,4 +141,10 @@ hr {
 
 .upgrade-card h4, .upgrade-card p {
     margin: 5px 0; /* Cleans up the spacing inside the buttons */
+}
+
+
+#writtenSoFar {
+    margin-left: 10px;
+    margin-right: 10px;
 }

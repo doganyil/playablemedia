@@ -14,6 +14,7 @@ let shakePercentage = 100;
 const maxShakePixels = 20;
 
 textToWrite = "PARKINSON'S DISEASE IS A CONDITION THAT AFFECTS THE NERVOUS SYSTEM AND HOW THE BODY MOVES. IT DEVELOPS GRADUALLY, OFTEN STARTING WITH A SLIGHT TREMOR IN ONE HAND, MUSCLE STIFFNESS, OR SLOWING OF MOVEMENT. WHILE LIVING WITH IT PRESENTS REAL CHALLENGES, THERE IS A LOT OF HOPE AND WAYS TO MANAGE THE SYMPTOMS. FOR PEOPLE WITH PARKINSON'S DISEASE, PHYSICAL ACTIVITY AND EXERCISE CAN HAVE A MAJOR POSITIVE IMPACT ON THEIR QUALITY OF LIFE. HOWEVER, IT CAN BE DIFFICULT TO GET STARTED AND TO MAINTAIN MOTIVATION. THE BARRIERS ARE NOT ONLY PHYSICAL, BUT ALSO SOCIAL AND EMOTIONAL. FIT4CURE IS AN ASSOCIATION THAT AIMS TO PROMOTE A HEALTHY AND ACTIVE LIFE FOR PEOPLE WITH PARKINSON'S. BY MOVING TOGETHER, WE GROW STRONGER"
+textToWrite = "AAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 letterIndex = 0
 console.log("Length of the text to write " + textToWrite.length)
 console.log(textToWrite[1])
@@ -120,23 +121,41 @@ btnStrongerFingers.addEventListener("click", function () {
     }
 });
 
+
+
+const progressBar = document.getElementById("progress-bar");
+const progressText = document.getElementById("progress-text");
+
+
 // Function to update the text on the screen
 function updateScreen() {
-    pointsDisplay.innerText = "Health Points: " + points;
+    pointsDisplay.innerText = "Health Points: " + points.toLocaleString('da-DK');
     nextLetterTitle.innerText = "Next letter to type (" + shakePercentage + "% tremors)"
     applyShakeIntensity()
     changeShakePercentage()
     updateTextWritten()
 
+// --- NEW PROGRESS BAR LOGIC ---
+    let progressPercentage = (letterIndex / textToWrite.length) * 100;
+    progressBar.style.width = progressPercentage + "%";
+    
+    // Add this new line to update the text!
+    progressText.innerText = Math.floor(progressPercentage) + "% completed (" + letterIndex +  " / " + textToWrite.length + ") (Scroll down to see your text progress)";
+    
 
-    //upgradeBtn.innerText = "Buy Running Shoes (Cost: " + upgradeCost + " HP)";
+    // Update the cost text with the formatting as well
+    costStrongerFingers.innerText = "Cost: " + strongerFingersUpgradeCost.toLocaleString('da-DK');
 
-    // Enable or disable the upgrade button based on if we have enough HP
-    //            if (points >= upgradeCost) {
-    //              upgradeBtn.disabled = false;
-    //    } else {
-    //          upgradeBtn.disabled = true;
-    //    }
+    // Enable or disable the button based on current points
+    if (points >= strongerFingersUpgradeCost) {
+        btnStrongerFingers.disabled = false;
+        btnStrongerFingers.style.opacity = "1";
+        btnStrongerFingers.style.cursor = "pointer";
+    } else {
+        btnStrongerFingers.disabled = true;
+        btnStrongerFingers.style.opacity = "0.3";
+        btnStrongerFingers.style.cursor = "not-allowed";
+    }
 }
 
 
