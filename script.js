@@ -1,4 +1,4 @@
-let points = 100000000;
+let points = 0;
 let pointsPerLetter = 1;
 let upgradeCost = 0;
 let currentLetter = "P";
@@ -19,9 +19,6 @@ textToWrite = "AAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAA
 textToWrite = "PARKINSON'S DISEASE IS A CONDITION THAT AFFECTS THE NERVOUS SYSTEM AND HOW THE BODY MOVES. IT DEVELOPS GRADUALLY, OFTEN STARTING WITH A SLIGHT TREMOR IN ONE HAND, MUSCLE STIFFNESS, OR SLOWING OF MOVEMENT. WHILE LIVING WITH IT PRESENTS REAL CHALLENGES, THERE IS A LOT OF HOPE AND WAYS TO MANAGE THE SYMPTOMS. FOR PEOPLE WITH PARKINSON'S DISEASE, PHYSICAL ACTIVITY AND EXERCISE CAN HAVE A MAJOR POSITIVE IMPACT ON THEIR QUALITY OF LIFE. HOWEVER, IT CAN BE DIFFICULT TO GET STARTED AND TO MAINTAIN MOTIVATION. THE BARRIERS ARE NOT ONLY PHYSICAL, BUT ALSO SOCIAL AND EMOTIONAL. FIT4CURE IS AN ASSOCIATION THAT AIMS TO PROMOTE A HEALTHY AND ACTIVE LIFE FOR PEOPLE WITH PARKINSON'S. BY MOVING TOGETHER, WE GROW STRONGER"
 
 letterIndex = 0
-console.log("Length of the text to write " + textToWrite.length)
-console.log(textToWrite[1])
-
 lettersTyped = ""
 
 // Function to generate a random letter
@@ -35,7 +32,6 @@ function generateNewLetter() {
     }
     if (currentLetter === " ") {
         letterDisplay.innerText = "SPACE";
-        console.log("space thing reached");
     } else {
         if (lettersSeen === 2) {
             currentLetter = textToWrite[letterIndex] + textToWrite[letterIndex + 1]
@@ -60,7 +56,6 @@ function generateNewLetter() {
             letterDisplay.innerText = currentLetter;
         }
     }
-    console.log(currentLetter)
 }
 
 // Listen for keyboard presses
@@ -69,11 +64,8 @@ document.addEventListener("keydown", function (event) {
     if (event.key === " ") {
         event.preventDefault();
     }
-    // Check if the key pressed matches the current letter (ignoring case)
-    console.log("Key pressed:" + event.key)
     if (event.key.toUpperCase() === currentLetter[0]) {
         // Correct! Add HP and update the screen
-        console.log("Random number: " + Math.random() * 100)
         if (criticalChance > Math.random() * 100) {
             pointsMultiplied = pointsPerLetter * 5
             points += pointsMultiplied
@@ -104,19 +96,19 @@ function applyShakeIntensity() {
     letterDisplay.style.setProperty('--shake-pixels', currentPixels + 'px');
 }
 
-function changeShakePercentage() {
-    logarithmicPoints = Math.log10(points)
-    // log10(1) = 0
-    // log10(10) = 1
-    // log10(100) = 2, etc, remember dodo!
-    if (logarithmicPoints >= 1) shakePercentage = 90;
-    if (logarithmicPoints > 2) shakePercentage = 80;
-    if (logarithmicPoints > 3) shakePercentage = 70;
-    if (logarithmicPoints > 4) shakePercentage = 60;
-    if (logarithmicPoints > 5) shakePercentage = 50;
-    if (logarithmicPoints > 6) shakePercentage = 40;
-    if (logarithmicPoints > 7) shakePercentage = 30;
-}
+// function changeShakePercentage() {
+//     logarithmicPoints = Math.log10(points)
+//     // log10(1) = 0
+//     // log10(10) = 1
+//     // log10(100) = 2, etc, remember dodo!
+//     if (logarithmicPoints >= 1) shakePercentage = 90;
+//     if (logarithmicPoints > 2) shakePercentage = 80;
+//     if (logarithmicPoints > 3) shakePercentage = 70;
+//     if (logarithmicPoints > 4) shakePercentage = 60;
+//     if (logarithmicPoints > 5) shakePercentage = 50;
+//     if (logarithmicPoints > 6) shakePercentage = 40;
+//     if (logarithmicPoints > 7) shakePercentage = 30;
+// }
 
 const writtenSoFar = document.getElementById("writtenSoFar")
 function updateTextWritten() {
@@ -133,13 +125,13 @@ let physicalUpgradeOneCost = 10
 const btnStrongerFingers = document.getElementById("btn-stronger-fingers");
 const costStrongerFingers = document.getElementById("cost-stronger-fingers");
 const physicalOneEffect = document.getElementById("physical-one-effect")
-scaleCost = 5
+scaleCost = 4
 
 btnStrongerFingers.addEventListener("click", function () {
     if (points >= physicalUpgradeOneCost) {
         points -= physicalUpgradeOneCost;
         pointsPerLetter *= 2;
-        physicalUpgradeOneCost = Math.floor(physicalUpgradeOneCost * scaleCost);
+        physicalUpgradeOneCost = Math.floor(physicalUpgradeOneCost * scaleCost) * costAfterReduced;
         costStrongerFingers.innerText = "Cost: " + physicalUpgradeOneCost
         updateScreen();
     }
@@ -158,14 +150,14 @@ btnPhysicalUpgradeTwo.addEventListener("click", function () {
         scaleCost = scaleCost - 0.5
         physicalOneEffect.innerText = "Doubles your health points per letter!" + newLine + newLine + "(Scales " + scaleCost + "x)"
 
-        physicalUpgradeTwoCost = Math.floor(physicalUpgradeTwoCost * 10);
+        physicalUpgradeTwoCost = Math.floor(physicalUpgradeTwoCost * 3) * costAfterReduced;
         costPhysicalUpgradeTwo.innerText = "Cost: " + physicalUpgradeTwoCost
         updateScreen();
     }
 });
 
 // LSVT Big Therapy
-let physicalUpgradeThreeCost = 10
+let physicalUpgradeThreeCost = 500
 const btnPhysicalUpgradeThree = document.getElementById("btn-physical-three")
 const costPhysicalUpgradeThree = document.getElementById("cost-physical-three")
 const physicalThreeEffect = document.getElementById("physical-three-effect")
@@ -181,7 +173,8 @@ btnPhysicalUpgradeThree.addEventListener("click", function () {
             physicalUpgradeThreeCost = "MAXED OUT!"
         } else {
             criticalChance += 15
-            physicalUpgradeThreeCost = Math.floor(physicalUpgradeThreeCost * 10);
+            physicalUpgradeThreeCost = Math.floor(physicalUpgradeThreeCost * 2.5) * costAfterReduced;
+
             costPhysicalUpgradeTwo.innerText = "Cost: " + physicalUpgradeThreeCost
             physicalThreeEffect.innerText = "LSVT trains the brain to make larger movements to counteract the shrinking, slow movements." + newLine + newLine + "Adds a 'Critical hit' chance." + newLine + newLine + "You have a " + criticalChance + "% chance to get 5x Health Points "
         }
@@ -199,7 +192,7 @@ btnPhysicalUpgradeThree.addEventListener("click", function () {
 // ----------------
 
 // Carbidopa Levodopa
-let mentalUpgradeOneCost = 10
+let mentalUpgradeOneCost = 1000
 const btnMentalUpgradeOne = document.getElementById("btn-mental-one")
 const costMentalUpgradeOne = document.getElementById("cost-mental-one")
 let lettersSeen = 1
@@ -213,7 +206,7 @@ btnMentalUpgradeOne.addEventListener("click", function () {
         if (lettersSeen === 4) {
             mentalUpgradeOneCost = "MAXED OUT!"
         } else {
-            mentalUpgradeOneCost = Math.floor(mentalUpgradeOneCost * 10);
+            mentalUpgradeOneCost = Math.floor(mentalUpgradeOneCost * 4) * costAfterReduced;
             costMentalUpgradeOne.innerText = "Cost: " + mentalUpgradeOneCost
             updateScreen();
         }
@@ -221,28 +214,57 @@ btnMentalUpgradeOne.addEventListener("click", function () {
     }
 });
 
+
+
 // Tremors BEGONE!
-let mentalUpgradeTwoCost = 1000
+let mentalUpgradeTwoCost = 10
 const btnMentalUpgradeTwo = document.getElementById("btn-mental-two")
 const costMentalUpgradeTwo = document.getElementById("cost-mental-two")
+const mentalTwoEffect = document.getElementById("mental-two-effect")
+
+btnMentalUpgradeTwo.addEventListener("click", function () {
+    if (points >= mentalUpgradeTwoCost) {
+        points -= mentalUpgradeTwoCost;
+
+        if (shakePercentage === 20) {
+            mentalUpgradeTwoCost = "MAXED OUT!"
+        } else {
+            shakePercentage -= 10
+            mentalUpgradeTwoCost = Math.floor(mentalUpgradeTwoCost * 10) * costAfterReduced;
+            costMentalUpgradeTwo.innerText = "Cost: " + mentalUpgradeTwoCost
+            mentalTwoEffect.innerText = "Reduces the shakiness of letters by 10%" + newLine + "(scales log10 (so, 10x))" + newLine + newLine + "Current tremors: " + shakePercentage + " %"
+
+            updateScreen();
+        }
+        updateScreen();
+    }
+});
+
 
 // Community support group
-let mentalUpgradeThreeCost = 10000
+let mentalUpgradeThreeCost = 5000
 const btnMentalUpgradeThree = document.getElementById("btn-mental-three")
 const costMentalUpgradeThree = document.getElementById("cost-mental-three")
+const mentalThreeEffect = document.getElementById("mental-three-effect")
+
 let costReduced = 0
+let costAfterReduced = 1
+
 
 btnMentalUpgradeThree.addEventListener("click", function () {
     if (points >= mentalUpgradeThreeCost) {
         points -= mentalUpgradeThreeCost;
 
-        lettersSeen += 1
 
-        if (lettersSeen === 4) {
+        if (costReduced === 65) {
             mentalUpgradeThreeCost = "MAXED OUT!"
         } else {
-            mentalUpgradeThreeCost = Math.floor(mentalUpgradeThreeCost * 10);
+            costReduced += 5
+            costAfterReduced = (1 - costReduced / 100)
+            mentalUpgradeThreeCost = Math.floor(mentalUpgradeThreeCost * 4) * costAfterReduced;
             costMentalUpgradeThree.innerText = "Cost: " + mentalUpgradeThreeCost
+            mentalThreeEffect.innerText = "Working out together boosts natural dopamine!" + newLine + newLine + "Reduce all future upgrades by " + costReduced + "%"
+
             updateScreen();
         }
         updateScreen();
@@ -303,9 +325,9 @@ const progressText = document.getElementById("progress-text");
 // Function to update the text on the screen
 function updateScreen() {
     pointsDisplay.innerText = "Health Points: " + points.toLocaleString('da-DK');
-    nextLetterTitle.innerText = "Next letter to type (" + shakePercentage + "% tremors)"
+    nextLetterTitle.innerText = "Next letter to type"
     applyShakeIntensity()
-    changeShakePercentage()
+    // changeShakePercentage()
     updateTextWritten()
 
     let progressPercentage = (letterIndex / textToWrite.length) * 100;
@@ -316,4 +338,6 @@ function updateScreen() {
     updateCosts()
     checkAffordability()
 
+
 }
+updateScreen()
