@@ -11,6 +11,35 @@
 </head>
 
 <body>
+  <div id="motion-sickness-modal" class="modal-overlay">
+    <div class="modal-content">
+      <h3>Got motion sickness?</h3>
+      <p>You should take a look at the settings where you can turn off the letter shakiness or turn down contrast to help with it.</p>
+      <button id="close-modal-btn">Got it!</button>
+    </div>
+  </div>
+
+  <div id="settings-modal" class="modal-overlay hidden">
+    <div class="modal-content">
+      <h3>Accessibility Settings</h3>
+      <div class="setting-item">
+        <label for="disable-shake">Disable Letter Shakiness:</label>
+        <input type="checkbox" id="disable-shake">
+      </div>
+      <div class="setting-item">
+        <label for="opacity-slider">Letter Opacity (%):</label>
+        <input type="number" id="opacity-slider" min="10" max="100" value="100">
+      </div>
+      <div class="setting-item">
+        <label for="contrast-slider">Letter Contrast (%):</label>
+        <input type="number" id="contrast-slider" min="10" max="100" value="100">
+      </div>
+      <button id="close-settings-btn">Apply & Close</button>
+    </div>
+  </div>
+
+  <button id="settings-btn" class="settings-btn">⚙️ Settings</button>
+  
   <h1 id="mainTitle">Run4Fit - Incremental game by Dogan Yildirim</h1>
 
   <div id="progress-container">
@@ -88,6 +117,7 @@
   <p id="writtenSoFar">PLACEHOLDER</p>
   <br>
   <br>
+  
   <script src="script.js"></script>
 </body>
 

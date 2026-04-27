@@ -12,7 +12,8 @@ const runPicture = document.getElementById("runningPicture");
 let pictureOrder = 1
 
 let shakePercentage = 100;
-const maxShakePixels = 20;
+// Reduced max shake from 20 to 8 for a smoother default experience
+const maxShakePixels = 8; 
 
 textToWrite = "AAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 
@@ -20,6 +21,59 @@ textToWrite = "PARKINSON'S DISEASE IS A CONDITION THAT AFFECTS THE NERVOUS SYSTE
 
 letterIndex = 0
 lettersTyped = ""
+
+// POP UP FOR MOTION SICKNESS
+const modalOverlay = document.getElementById("motion-sickness-modal");
+const closeModalBtn = document.getElementById("close-modal-btn");
+
+closeModalBtn.addEventListener("click", function() {
+    modalOverlay.classList.add("hidden");
+});
+
+// --- NEW SETTINGS LOGIC ---
+const settingsBtn = document.getElementById("settings-btn");
+const settingsModal = document.getElementById("settings-modal");
+const closeSettingsBtn = document.getElementById("close-settings-btn");
+const disableShakeCheckbox = document.getElementById("disable-shake");
+const opacitySlider = document.getElementById("opacity-slider");
+const contrastSlider = document.getElementById("contrast-slider");
+
+let isShakeDisabled = false;
+
+// Open settings
+settingsBtn.addEventListener("click", () => {
+    settingsModal.classList.remove("hidden");
+});
+
+// Close settings
+closeSettingsBtn.addEventListener("click", () => {
+    settingsModal.classList.add("hidden");
+});
+
+// Disable shake toggle
+disableShakeCheckbox.addEventListener("change", (event) => {
+    isShakeDisabled = event.target.checked;
+    applyShakeIntensity(); // Update immediately when clicked
+});
+
+// Adjust Opacity (Applied specifically to the letter)
+opacitySlider.addEventListener("input", (event) => {
+    let val = event.target.value;
+    // Keep it between 10% and 100% so it doesn't disappear completely
+    if (val < 10) val = 10;
+    if (val > 100) val = 100;
+    letterDisplay.style.setProperty('--letter-opacity', val / 100);
+});
+
+// Adjust Contrast (Applied specifically to the letter)
+contrastSlider.addEventListener("input", (event) => {
+    let val = event.target.value;
+    if (val < 10) val = 10;
+    // Allow going over 100% just in case they want it, but cap at 200%
+    if (val > 200) val = 200;
+    letterDisplay.style.setProperty('--letter-contrast', val + '%');
+});
+
 
 // Function to generate a random letter
 function generateNewLetter() {
@@ -35,24 +89,20 @@ function generateNewLetter() {
     } else {
         if (lettersSeen === 2) {
             currentLetter = textToWrite[letterIndex] + textToWrite[letterIndex + 1]
-            // Only display the currentLetter if it is NOT a space
             letterDisplay.innerText = currentLetter;
         }
 
         if (lettersSeen === 3) {
             currentLetter = textToWrite[letterIndex] + textToWrite[letterIndex + 1] + textToWrite[letterIndex + 2]
-            // Only display the currentLetter if it is NOT a space
             letterDisplay.innerText = currentLetter;
         }
         if (lettersSeen === 4) {
             currentLetter = textToWrite[letterIndex] + textToWrite[letterIndex + 1] + textToWrite[letterIndex + 2] + textToWrite[letterIndex + 3]
-            // Only display the currentLetter if it is NOT a space
             letterDisplay.innerText = currentLetter;
         }
 
 
         else {
-            // Only display the currentLetter if it is NOT a space
             letterDisplay.innerText = currentLetter;
         }
     }
@@ -90,25 +140,16 @@ document.addEventListener("keydown", function (event) {
 
 // Function to update the shaking intensity
 function applyShakeIntensity() {
-    // Calculate the actual pixel movement based on the percentage
-    let currentPixels = (shakePercentage / 100) * maxShakePixels;
-    // Inject that pixel amount into our CSS variable
-    letterDisplay.style.setProperty('--shake-pixels', currentPixels + 'px');
+    // If the user turned it off in settings, set pixels to 0
+    if (isShakeDisabled) {
+        letterDisplay.style.setProperty('--shake-pixels', '0px');
+    } else {
+        // Calculate the actual pixel movement based on the percentage
+        let currentPixels = (shakePercentage / 100) * maxShakePixels;
+        // Inject that pixel amount into our CSS variable
+        letterDisplay.style.setProperty('--shake-pixels', currentPixels + 'px');
+    }
 }
-
-// function changeShakePercentage() {
-//     logarithmicPoints = Math.log10(points)
-//     // log10(1) = 0
-//     // log10(10) = 1
-//     // log10(100) = 2, etc, remember dodo!
-//     if (logarithmicPoints >= 1) shakePercentage = 90;
-//     if (logarithmicPoints > 2) shakePercentage = 80;
-//     if (logarithmicPoints > 3) shakePercentage = 70;
-//     if (logarithmicPoints > 4) shakePercentage = 60;
-//     if (logarithmicPoints > 5) shakePercentage = 50;
-//     if (logarithmicPoints > 6) shakePercentage = 40;
-//     if (logarithmicPoints > 7) shakePercentage = 30;
-// }
 
 const writtenSoFar = document.getElementById("writtenSoFar")
 function updateTextWritten() {
@@ -120,12 +161,11 @@ function updateTextWritten() {
 // ---------------
 
 // Stronger Fingers upgrade
-// ------
 let physicalUpgradeOneCost = 10
 const btnStrongerFingers = document.getElementById("btn-stronger-fingers");
 const costStrongerFingers = document.getElementById("cost-stronger-fingers");
 const physicalOneEffect = document.getElementById("physical-one-effect")
-scaleCost = 4
+let scaleCost = 4
 
 btnStrongerFingers.addEventListener("click", function () {
     if (points >= physicalUpgradeOneCost) {
@@ -167,20 +207,15 @@ btnPhysicalUpgradeThree.addEventListener("click", function () {
     if (points >= physicalUpgradeThreeCost) {
         points -= physicalUpgradeThreeCost;
 
-
-
         if (criticalChance === 90) {
             physicalUpgradeThreeCost = "MAXED OUT!"
         } else {
             criticalChance += 15
-            physicalUpgradeThreeCost = Math.floor(physicalUpgradeThreeCost * 2.5) * costAfterReduced;
+            physicalUpgradeThreeCost = Math.floor(physicalUpgradeThreeCost * 1.8) * costAfterReduced;
 
-            costPhysicalUpgradeTwo.innerText = "Cost: " + physicalUpgradeThreeCost
+            costPhysicalUpgradeThree = "Cost: " + physicalUpgradeThreeCost
             physicalThreeEffect.innerText = "LSVT trains the brain to make larger movements to counteract the shrinking, slow movements." + newLine + newLine + "Adds a 'Critical hit' chance." + newLine + newLine + "You have a " + criticalChance + "% chance to get 5x Health Points "
         }
-
-
-
 
         updateScreen();
     }
@@ -206,7 +241,7 @@ btnMentalUpgradeOne.addEventListener("click", function () {
         if (lettersSeen === 4) {
             mentalUpgradeOneCost = "MAXED OUT!"
         } else {
-            mentalUpgradeOneCost = Math.floor(mentalUpgradeOneCost * 4) * costAfterReduced;
+            mentalUpgradeOneCost = Math.floor(mentalUpgradeOneCost * 3) * costAfterReduced;
             costMentalUpgradeOne.innerText = "Cost: " + mentalUpgradeOneCost
             updateScreen();
         }
@@ -230,7 +265,7 @@ btnMentalUpgradeTwo.addEventListener("click", function () {
             mentalUpgradeTwoCost = "MAXED OUT!"
         } else {
             shakePercentage -= 10
-            mentalUpgradeTwoCost = Math.floor(mentalUpgradeTwoCost * 10) * costAfterReduced;
+            mentalUpgradeTwoCost = Math.floor(mentalUpgradeTwoCost * 4) * costAfterReduced;
             costMentalUpgradeTwo.innerText = "Cost: " + mentalUpgradeTwoCost
             mentalTwoEffect.innerText = "Reduces the shakiness of letters by 10%" + newLine + "(scales log10 (so, 10x))" + newLine + newLine + "Current tremors: " + shakePercentage + " %"
 
@@ -255,13 +290,12 @@ btnMentalUpgradeThree.addEventListener("click", function () {
     if (points >= mentalUpgradeThreeCost) {
         points -= mentalUpgradeThreeCost;
 
-
         if (costReduced === 65) {
             mentalUpgradeThreeCost = "MAXED OUT!"
         } else {
             costReduced += 5
             costAfterReduced = (1 - costReduced / 100)
-            mentalUpgradeThreeCost = Math.floor(mentalUpgradeThreeCost * 4) * costAfterReduced;
+            mentalUpgradeThreeCost = Math.floor(mentalUpgradeThreeCost * 2.5) * costAfterReduced;
             costMentalUpgradeThree.innerText = "Cost: " + mentalUpgradeThreeCost
             mentalThreeEffect.innerText = "Working out together boosts natural dopamine!" + newLine + newLine + "Reduce all future upgrades by " + costReduced + "%"
 
@@ -271,7 +305,6 @@ btnMentalUpgradeThree.addEventListener("click", function () {
     }
 });
 
-// Replace your upgradeMap with this array of objects:
 const allUpgrades = [
     { button: btnStrongerFingers, getCost: () => physicalUpgradeOneCost },
     { button: btnPhysicalUpgradeTwo, getCost: () => physicalUpgradeTwoCost },
@@ -281,15 +314,12 @@ const allUpgrades = [
     { button: btnMentalUpgradeThree, getCost: () => mentalUpgradeThreeCost }
 ];
 
-// Replace your checkAffordability functions with this single loop:
 function checkAffordability() {
-    // Loop through every upgrade in our list
     for (let upgrade of allUpgrades) {
 
-        let currentCost = upgrade.getCost(); // Grabs the live, updated cost
-        let btn = upgrade.button;            // Grabs the specific button
+        let currentCost = upgrade.getCost(); 
+        let btn = upgrade.button;            
 
-        // Enable or disable the button based on current points
         if (points >= currentCost) {
             btn.disabled = false;
             btn.style.opacity = "1";
@@ -302,8 +332,6 @@ function checkAffordability() {
     }
 }
 
-
-
 function updateCosts() {
     costStrongerFingers.innerText = "Cost: " + physicalUpgradeOneCost.toLocaleString('da-DK');
     costPhysicalUpgradeTwo.innerText = "Cost: " + physicalUpgradeTwoCost.toLocaleString('da-DK');
@@ -313,21 +341,14 @@ function updateCosts() {
     costMentalUpgradeThree.innerText = "Cost: " + mentalUpgradeThreeCost.toLocaleString('da-DK');
 }
 
-
-
-
-
-
 const progressBar = document.getElementById("progress-bar");
 const progressText = document.getElementById("progress-text");
-
 
 // Function to update the text on the screen
 function updateScreen() {
     pointsDisplay.innerText = "Health Points: " + points.toLocaleString('da-DK');
     nextLetterTitle.innerText = "Next letter to type"
     applyShakeIntensity()
-    // changeShakePercentage()
     updateTextWritten()
 
     let progressPercentage = (letterIndex / textToWrite.length) * 100;
@@ -337,7 +358,6 @@ function updateScreen() {
 
     updateCosts()
     checkAffordability()
-
-
 }
+
 updateScreen()
